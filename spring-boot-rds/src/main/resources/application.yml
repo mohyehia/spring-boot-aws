@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: Spring Boot RDS
+  datasource:
+    url: <url for db instance>
+    username: <master username>
+    password: <master password>
+  jpa:
+    hibernate:
+      ddl-auto: update
+server:
+  port: 9091

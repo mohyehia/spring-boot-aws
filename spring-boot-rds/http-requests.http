@@ -1,0 +1,28 @@
+GET http://localhost:9091/api/v1/products
+
+###
+GET http://localhost:9091/api/v1/products/1
+
+###
+POST http://localhost:9091/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Apple IPhone 14 Plus",
+  "description": "Apple IPhone 14 Plus description",
+  "price": 2999
+}
+
+###
+PUT http://localhost:9091/api/v1/products/1
+Content-Type: application/json
+
+{
+  "name": "Apple Iphone 14 Pro",
+  "description": "Apple Iphone 14 Pro description goes here!",
+  "price": 3999
+}
+
+
+###
+DELETE http://localhost:9091/api/v1/products/1
