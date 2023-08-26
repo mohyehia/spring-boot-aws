@@ -1,0 +1,32 @@
+GET ec2-54-157-46-185.compute-1.amazonaws.com:9090/dynamodb/api/v1/products
+
+###
+GET ec2-54-157-46-185.compute-1.amazonaws.com:9090/dynamodb/api/v1/products/b0b012e0-8678-4f46-ab79-94246ab978b9
+
+###
+POST ec2-54-157-46-185.compute-1.amazonaws.com:9090/dynamodb/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Apple IPhone 14 Plus",
+  "description": "Apple IPhone 14 Plus description",
+  "category": {
+    "name": "Mobile Phones"
+  }
+}
+
+###
+PUT ec2-54-157-46-185.compute-1.amazonaws.com:9090/dynamodb/api/v1/products/65c9a1f6-9ace-4d0f-ae2b-47d18e3fc0d5
+Content-Type: application/json
+
+{
+  "name": "Apple Iphone 14 Plus",
+  "description": "Apple Iphone 14 Plus description goes here!",
+  "category": {
+    "name": "Mobile Phones"
+  }
+}
+
+
+###
+DELETE ec2-54-157-46-185.compute-1.amazonaws.com:9090/dynamodb/api/v1/products/65c9a1f6-9ace-4d0f-ae2b-47d18e3fc0d5

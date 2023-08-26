@@ -1,0 +1,14 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /dynamodb
+spring:
+  application:
+    name: spring-boot-dynamodb
+
+aws:
+  dynamo:
+    serviceEndpoint: dynamodb.ur-region.amazonaws.com
+    signingRegion: ur-region
+    accessKey: <ur-access-key>
+    secretKey: <ur-secret-key>
