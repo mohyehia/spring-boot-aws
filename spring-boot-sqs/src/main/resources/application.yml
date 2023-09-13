@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    aws:
+      region:
+        static: <ur-region>
+      credentials:
+        access-key: <ur-access-key>
+        secret-key: <ur-secret-key>
+      sqs:
+        endpoint: <sqs-url>
