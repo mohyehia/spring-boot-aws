@@ -1,77 +1,45 @@
 package com.moh.yehia.sqs.controller;
 
+import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moh.yehia.sqs.model.MessageRequest;
-import com.moh.yehia.sqs.model.MyMessage;
-import io.awspring.cloud.sqs.operations.SendResult;
-import io.awspring.cloud.sqs.operations.SqsTemplate;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.messaging.Message;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/messages")
 @RequiredArgsConstructor
-@Log4j2
+@Slf4j
 public class MessageController {
-    private final SqsTemplate sqsTemplate;
-
-    private static final String QUEUE_NAME = "aws-sqs-queue";
+    private final AmazonSQSAsync amazonSQS;
+    private final ObjectMapper objectMapper;
+    private final JmsTemplate jmsTemplate;
 
     @PostMapping
-    public String send(@RequestBody MessageRequest messageRequest) throws InterruptedException {
+    public String sendMessage(@RequestBody MessageRequest messageRequest) throws Exception {
+        messageRequest.setUserId(UUID.randomUUID().toString());
         messageRequest.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        // Send a message with the provided options.
-        SendResult<Object> sendResultResponse = sqsTemplate.send(sqsSendOptions ->
-                sqsSendOptions.queue(QUEUE_NAME)
-                        .payload(messageRequest)
-                        .header("my-custom-header", UUID.randomUUID().toString())
-        );
-        log.info("sendResultResponse with provided options =>{}", sendResultResponse.toString());
-
-        Thread.sleep(1000);
-
-        // Send a message to the provided queue with the given payload.
-        messageRequest.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        SendResult<MessageRequest> sendResultWithQueue = sqsTemplate.send(QUEUE_NAME, messageRequest);
-        log.info("sendResultWithQueue =>{}", sendResultWithQueue.toString());
-
-        return "New message published successfully!";
+        log.info("messageRequest =>{}", messageRequest);
+        jmsTemplate.send(new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                return session.createObjectMessage(messageRequest);
+            }
+        });
+        log.info("sent successfully!");
+        return "Message sent successfully!";
     }
-
-    @PostMapping("/message")
-    public String sendMessage(@RequestBody MessageRequest messageRequest) {
-        // Send the given Message to the provided queue.
-        messageRequest.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        SendResult<MessageRequest> sendResultWithMessage = sqsTemplate.send(QUEUE_NAME, new MyMessage(messageRequest));
-        log.info("sendResultWithMessage =>{}", sendResultWithMessage.toString());
-        return "New message published successfully!";
-    }
-
-    @GetMapping("/batch/{count}")
-    public String sendBatchOfMessages(@PathVariable("count") int count) {
-        MessageRequest messageRequest;
-        Collection<Message<MessageRequest>> messages = new ArrayList<>();
-        for (int i = 1; i < count; i++) {
-            messageRequest = new MessageRequest(i, "Random message for the user " + i, "Random content for the user " + i, Timestamp.valueOf(LocalDateTime.now()));
-            messages.add(new MyMessage(messageRequest));
-        }
-        log.info("sending {} messages", count);
-        try {
-            SendResult.Batch<MessageRequest> messageRequestBatch = sqsTemplate.sendMany(QUEUE_NAME, messages);
-            log.info("Successful messages =>{}", messageRequestBatch.successful().toString());
-            log.info("Failed messages =>{}", messageRequestBatch.failed().toString());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-        log.info("{} messages sent successfully!", count);
-        return "success!";
-    }
-
 }
