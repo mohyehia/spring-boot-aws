@@ -2,9 +2,12 @@ spring:
   application:
     name: spring-boot-sqs
 
-aws:
-  sqs:
-    serviceEndpoint: https://sqs.<ur-region>.amazonaws.com
-    signingRegion: <ur-region>
-    accessKey: <ur-access-key>
-    secretKey: <ur-secret-key>
+  cloud:
+    aws:
+      region:
+        static: <ur-region>
+      credentials:
+        access-key: <ur-access-key>
+        secret-key: <ur-secret-key>
+      sqs:
+        endpoint: <ur-sqs-endpoint-from-aws-console>
