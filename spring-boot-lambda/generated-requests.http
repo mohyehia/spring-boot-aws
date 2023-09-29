@@ -1,0 +1,26 @@
+### findAll
+GET <ur-aws-lambda-function-url>
+spring.cloud.function.definition: findAll
+
+
+### findById
+POST <ur-aws-lambda-function-url>
+spring.cloud.function.definition: findById
+Content-Type: application/json
+
+{
+  "productId": "9d09d595-01c2-4a85-ba3a-ec0024a5b3a8"
+}
+
+### save
+POST <ur-aws-lambda-function-url>
+spring.cloud.function.definition: save
+Content-Type: application/json
+
+{
+  "name": "First Lambda Product",
+  "description": "First Lambda Product description is here!",
+  "price": "500",
+  "categoryId": "123465789",
+  "stock": 8
+}
