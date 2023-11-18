@@ -1,0 +1,8 @@
+### view buckets
+GET http://localhost:9090/s3/api/v1/buckets
+
+### delete bucket
+DELETE http://localhost:9090/s3/api/v1/buckets/<bucket-name>
+
+### view objects
+GET http://localhost:9090/s3/api/v1/objects?bucket=<bucket-name>
