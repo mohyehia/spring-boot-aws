@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: spring-boot-aws-cognito
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.<ur-region>.amazonaws.com/<user-pool-id>
+          jwk-set-uri: https://cognito-idp.<ur-region>.amazonaws.com/<user-pool-id>/.well-known/jwks.json
+
+aws:
+  cognito:
+    accessKey: <ur-aws-access-key>
+    secretKey: <ur-aws-secret-key>
+    clientId: <client-id-integrated-with-user-pool>
