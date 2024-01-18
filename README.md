@@ -9,3 +9,4 @@ Demo project for using Spring Boot with AWS services
 - [Spring Boot S3](spring-boot-s3/)
 - [Spring Boot 3 AWS Lambda](spring-boot-3-aws-lambda/)
 - [Spring Boot AWS Cognito Integration](spring-boot-aws-cognito/)
+- [Spring Boot Lambda S3 Upload Trigger ](spring-boot-lambda-trigger/)
