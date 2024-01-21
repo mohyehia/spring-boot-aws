@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: spring-boot-event-bridge-integration
+
+aws:
+  event:
+    bridge:
+      access-key: <ur-access-key>
+      secret-key: <ur-secret-key>
+      source: com.moh.yehia.event.bridge
+      event-bus: <event-bus-name>
+      detail-type: <any-custom-string-that-will-be-used-in-ur-custom-rules>
