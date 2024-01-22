@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: spring-boot-aws-cloudwatch
+
+  cloud:
+    aws:
+      credentials:
+        access-key: <ur-access-key>
+        secret-key: <ur-secret-key>
+      cloudwatch:
+        region: <ur-region>
+
+management:
+  cloudwatch:
+    metrics:
+      export:
+        namespace: SpringBootMetrics
+        step: 1m
+        batch-size: 10
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+  metrics:
+    tags:
+      department: ${SERVICE_DEPARTMENT:Software Development}
+      team: ${SERVICE_TEAM:Observability}
+      service: ${spring.application.name}
+      env: ${SERVICE_ENVIRONMENT:dev}
+      instance.id: ${SERVICE_INSTANCE_ID:${random.uuid}}
