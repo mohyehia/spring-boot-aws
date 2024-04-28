@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: spring-boot-parameter-store
+  config:
+    import: aws-parameterstore:/config/spring-boot/
+  cloud:
+    aws:
+      region:
+        static: <region>
+      credentials:
+        access-key: <ur-aws-access-key>
+        secret-key: <ur-aws-secret-key>
