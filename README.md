@@ -13,3 +13,4 @@ Demo project for using Spring Boot with AWS services
 - [Spring Boot AWS EventBridge Integration](spring-boot-aws-event-bridge/)
 - [Spring Boot Lambda EventBridge Trigger](spring-boot-event-bridge-lambda-trigger/)
 - [Spring Boot AWS CloudWatch Integration](spring-boot-aws-cloudwatch/)
+- [Spring Boot AWS Parameter Store Integration](spring-boot-parameter-store/)
